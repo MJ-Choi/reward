@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/company
+    username: prdadmin
+    password: prdpass
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+logging:
+  level:
+    root: debug
+    com.zaxxer.hikari.pool.HikariPool: info
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+redis:
+  server: localhost
+  port: 6379
+  database: 0
+  timeout-ms: 3000
+  max-conn: 100
+  max-wait-ms: 30000
+  min-idle: 100
+app:
+  init-value: true

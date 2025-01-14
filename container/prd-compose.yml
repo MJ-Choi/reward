@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  appdb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: demo
+      MYSQL_DATABASE: company
+      MYSQL_USER: hradmin
+      MYSQL_PASSWORD: hrpass
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    command: --default-time-zone='Asia/Seoul' --lower_case_table_names=1
+  testdb:
+    image: mariadb:latest
+    container_name: testdb
+    environment:
+      MYSQL_ROOT_PASSWORD: demo
+      MYSQL_DATABASE: company
+      MYSQL_USER: hradmin
+      MYSQL_PASSWORD: hrpass
+    volumes:
+      - ./test-init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3307:3306"
+    command: --default-time-zone='Asia/Seoul' --lower_case_table_names=1
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    network_mode: host
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redismon
+    ports:
+      - "5540:5540"
+    network_mode: host
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
+    driver: local
