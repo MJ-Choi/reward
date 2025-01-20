@@ -1,17 +1,14 @@
 package com.product.reward.reward.dto;
 
-import com.product.reward.util.DateUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class RewardDto {
 
@@ -20,7 +17,7 @@ public class RewardDto {
     private RewardState state;  // 리워드 상태
     private LocalDateTime rewardDtm;   // 리워드 시간(지급 대상 날짜)
     private LocalDateTime collectDtm;  // 요청 시점(집계 기준일)
-    private Map<Long, Integer> top10Comics = null; // {cid: value}
+    private List<RewardComicDto> top10Comics = null; // {cid: value}
 
     public RewardDto(Long rid, String type, String state, LocalDateTime rewardDtm, LocalDateTime collectDtm) {
         this.rid = rid;

@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public enum UserType implements EnumFinder {
-    ARTIST("A", "작가"),
-    USER("U", "소비자"),
+    ARTIST("a", "작가"),
+    USER("m", "소비자"),
     ;
 
     private String code;

@@ -2,10 +2,7 @@ package com.product.reward.entity;
 
 import com.product.reward.entity.id.RewardId;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -50,4 +47,14 @@ public class RewardHistory {
     @JoinColumn(name = "cid", nullable = false, insertable = false, updatable = false)
     private Comic comic;
 
+    public RewardHistory(Long rid, Long cid,
+                         String type, Long id,
+                         int rank, int point) {
+        this.rid = rid;
+        this.cid = cid;
+        this.type = type;
+        this.id = id;
+        this.rank = rank;
+        this.point = point;
+    }
 }

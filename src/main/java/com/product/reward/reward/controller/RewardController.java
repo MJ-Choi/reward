@@ -1,8 +1,8 @@
 package com.product.reward.reward.controller;
 
 import com.product.reward.api.ResponseDto;
-import com.product.reward.reward.dto.RewardDto;
 import com.product.reward.reward.dto.RewardHistoryDto;
+import com.product.reward.reward.dto.request.RewardEditRequest;
 import com.product.reward.reward.dto.request.RewardRequest;
 import com.product.reward.reward.service.RewardService;
 import lombok.AllArgsConstructor;
@@ -28,10 +28,20 @@ public class RewardController {
      * @return 성공 여부 (true: 성공 / false: 실패)
      */
     @PostMapping(value = "")
-    public ResponseDto<RewardDto> register(@RequestBody RewardRequest request) {
+    public ResponseDto<Boolean> register(@RequestBody RewardRequest request) {
         log.info("Input: {}", request);
-
         return new ResponseDto<>(service.register(request));
+    }
+
+    /**
+     * 리워드 정보 수정
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "")
+    public ResponseDto<Boolean> edit(@RequestBody RewardEditRequest request) {
+        log.info("Input: {}", request);
+        return new ResponseDto<>(service.edit(request));
     }
 
     /**
@@ -40,10 +50,10 @@ public class RewardController {
      * @param rid
      * @return
      */
+    // todo
     @PostMapping(value = "/{rid}")
     public ResponseDto<Boolean> payReward(@PathVariable long rid) {
         log.info("Input: {}", rid);
-
         return new ResponseDto<>(service.payment(rid));
     }
 

@@ -201,14 +201,17 @@ app:
 # 3. API
 이 프로젝트에서 개발하는 구현 범위 
 
-| user | method | uri                          | description        |
-|------|--------|------------------------------|--------------------|
-| user | GET    | /comic/{comics}              | 소비자가 작품 조회         |
-| user | POST   | /comic/{comics}              | 소비자가 작품에 '좋아요'를 설정 |
-| artist | GET    | /artist/{comics}             | 작가가 작품별 데이터 확인     |
-| artist | POST   | /artist                      | 작가가 작품 등록          |
-| artist | GET    | /reward/history?t=a&id={aid} | 리워드 지급 내역 조회       |
-| user | GET    | /reward?/historyt=m&id={mid} | 리워드 지급 내역 조회       |
-| admin | POST   | /reward                      | 운영자가 리워드 요청 생성     |
-| admin | POST   | /reward/{rid}                | 운영자가 리워드 지급 요청     |
-| admin | GET    | /reward/history              | 리워드 지급 내역 조회       |
+집계까지 구현완료. 집계된 내용은 작품 조회 시 확인 가능하나 랭킹은 구현하지 못함.
+회원에게 지급은 구현하지 못함.
+
+| 구현 및 테스트   | user | method | uri                          | description        |
+|------------|------|--------|------------------------------|--------------------|
+| 구현, 테스트 완료 | user      | GET    | /comic/{comics}              | 소비자가 작품 조회         |
+| 구현, 테스트 완료 | user       | POST   | /comic/{comics}              | 소비자가 작품에 '좋아요'를 설정 |
+| 구현, 테스트 완료 | artist     | GET    | /artist/{comics}             | 작가가 작품별 데이터 확인     |
+| 구현, 테스트 완료 | artist     | POST   | /artist                      | 작가가 작품 등록          |
+| 테스트 미완     | artist     | GET    | /reward/history?t=a&id={aid} | 리워드 지급 내역 조회       |
+| 테스트 미완     | user       | GET    | /reward?/historyt=m&id={mid} | 리워드 지급 내역 조회       |
+| 테스트 미완     | admin      | POST   | /reward                      | 운영자가 리워드 요청 생성     |
+| 구현 미완      | admin      | POST   | /reward/{rid}                | 운영자가 리워드 지급 요청     |
+| 테스트 미완     | admin      | GET    | /reward/history              | 리워드 지급 내역 조회       |
