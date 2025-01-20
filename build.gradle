@@ -1,81 +1,114 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.1'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+//    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.product'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	testCompileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    testCompileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// database
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	testImplementation 'org.projectlombok:lombok:1.18.26'
-	testImplementation 'junit:junit:4.13.1'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
-	// sql logging parameter mapping
-	runtimeOnly 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2'
+    // database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'junit:junit:4.13.1'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+    // sql logging parameter mapping
+    runtimeOnly 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2'
 
-	// Querydsl
-	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    // Querydsl
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    implementation 'com.querydsl:querydsl-sql:5.0.0'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+//    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0' // 기본 Q 클래스 생성용
+//    annotationProcessor 'com.querydsl:querydsl-jpa:5.0.0' // JPA 전용
+//    annotationProcessor 'com.querydsl:querydsl-sql-codegen:5.0.0' // SQL 코드 생성
+//    compileOnly 'com.querydsl:querydsl-apt:5.0.0'
+//    compileOnly 'com.querydsl:querydsl-codegen:5.0.0'
+//    compileOnly 'com.querydsl:querydsl-sql-codegen:5.0.0'
 
-	// redis
-	implementation 'com.google.code.gson:gson:2.10.1'
-	implementation 'org.apache.commons:commons-pool2:2.11.1'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // redis
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.apache.commons:commons-pool2:2.11.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.mockito:mockito-core'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 // querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
 
 sourceSets {
-	main.java.srcDirs += [querydslDir]
+    main.java.srcDirs += [querydslDir]
 }
 
 tasks.withType(JavaCompile) {
-	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
 }
 
 clean.doLast {
 	file(querydslDir).deleteDir()
 }
 // querydsl EOF
+
+//def querydslSourcesDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+//sourceSets {
+//    main {
+//        java {
+//            srcDirs = ["src/main/java", querydslSourcesDir]
+//        }
+//    }
+//}
+//
+//compileJava.options.annotationProcessorPath = configurations.annotationProcessor
+//tasks.withType(JavaCompile) {
+//    options.annotationProcessorGeneratedSourcesDirectory = file(querydslSourcesDir)
+//}
+//
+//tasks.withType(Delete) {
+//    delete fileTree(querydslSourcesDir) {
+//        include '**/Q*.java', '**/SQ*.java'
+//    }
+//}
+//
+//task cleanGenerated(type: Delete) {
+//    delete "$querydslSourcesDir/**/*Q*.java"
+//    delete "$querydslSourcesDir/**/*SQ*.java"
+//}

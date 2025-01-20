@@ -7,9 +7,11 @@ import lombok.ToString;
 @ToString
 public enum ErrorCode {
   SUCCESS(200, "정상응답"),
-  CHECKED(400,"이미 등록한 브랜드입니다."),
+  CHECKED(400,"등록 실패"),
   INPUT_ERROR(400, "잘못된 입력값입니다."),
-  NO_DATA(404, "요청한 데이터가 없습니다.");
+  NO_DATA(404, "요청한 데이터가 없습니다."),
+  SQL_ERROR(500, "데이터베이스 에러"),
+  ;
 
   private int code;
   private String msg;

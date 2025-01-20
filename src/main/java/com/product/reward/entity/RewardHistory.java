@@ -33,6 +33,12 @@ public class RewardHistory {
     @Column(name = "id", nullable = false)
     private Long id;  // 작가 혹은 소비자 id
 
+    @Column(name = "rank", nullable = false)
+    private int rank; // 지급이유(랭킹순위)
+
+    @Column(name = "point", nullable = false)
+    private int point; // 지급된 포인트 = 랭킹점수
+
     @Column(name = "created_dmt", columnDefinition = "DATETIME")
     private LocalDateTime createdDmt;
 

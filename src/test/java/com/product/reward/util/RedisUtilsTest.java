@@ -27,7 +27,7 @@ class RedisUtilsTest {
         String key = "test-get";
         String value = "get-value";
         redisUtils.setStr(key, value);
-        String result = redisUtils.getMap(key);
+        String result = redisUtils.getStr(key);
         System.out.println("result = " + result);
         Assertions.assertFalse(StringUtils.isBlank(result));
         Assertions.assertEquals(value, result);

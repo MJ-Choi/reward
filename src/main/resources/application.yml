@@ -30,4 +30,7 @@ redis:
   max-wait-ms: 30000
   min-idle: 100
 app:
-  init-value: true
+  init-db-datas: true
+  init-redis-datas: true
+  use-redis: true
+  db-bulk-size: 50

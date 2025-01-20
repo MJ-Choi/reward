@@ -1,4 +1,5 @@
 package com.product.reward.util;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +28,12 @@ public class RedisUtils {
      * @param key 레디스 키
      * @return 값
      */
-    public String getMap(String key) {
+    public String getStr(String key) {
         return template.opsForValue().get(key);
     }
 
-    public <T> List<T> getMap(String key, Class<T> clazz) {
-        String value = getMap(key);
+    public <T> List<T> getList(String key, Class<T> clazz) {
+        String value = getStr(key);
         try {
             Type type = TypeToken.getParameterized(List.class, clazz).getType();
             return gson.fromJson(value, type);
@@ -43,7 +44,7 @@ public class RedisUtils {
     }
 
     public <T> Set<T> getSet(String key, Class<T> clazz) {
-        String value = getMap(key);
+        String value = getStr(key);
         try {
             Type type = TypeToken.getParameterized(List.class, clazz).getType();
             return gson.fromJson(value, type);
@@ -54,7 +55,7 @@ public class RedisUtils {
     }
 
     public <K, V> Map<K, List<V>> getMapList(String key, Class<K> kClass, Class<V> vClass) {
-        String value = getMap(key);
+        String value = getStr(key);
         try {
             Type type = TypeToken.getParameterized(Map.class,
                             kClass, TypeToken.getParameterized(List.class, vClass).getType())
@@ -66,8 +67,22 @@ public class RedisUtils {
         return new HashMap<>();
     }
 
+    public <K, V> LinkedHashMap<K, V> getLinkedMap(String key, Class<K> kClass, Class<V> vClass) {
+        String value = getStr(key);
+        if (!StringUtils.hasText(value)) {
+            return new LinkedHashMap<>();
+        }
+        try {
+            Type type = TypeToken.getParameterized(LinkedHashMap.class, kClass, vClass).getType();
+            return gson.fromJson(value, type);
+        } catch (Exception e) {
+            log.error("failed to convert {}: ", value, e);
+        }
+        return new LinkedHashMap<>();
+    }
+
     public <K, V> Map<K, V> getMap(String key, Class<K> kClass, Class<V> vClass) {
-        String value = getMap(key);
+        String value = getStr(key);
         if (!StringUtils.hasText(value)) {
             return new HashMap<>();
         }
@@ -81,7 +96,7 @@ public class RedisUtils {
     }
 
     public <K1, K2, V> Map<K1, Map<K2, V>> getMap(String key, Class<K1> k1Class, Class<K2> k2Class, Class<V> vClass) {
-        String value = getMap(key);
+        String value = getStr(key);
         if (!StringUtils.hasText(key)) {
             return new HashMap<>();
         }
@@ -136,7 +151,7 @@ public class RedisUtils {
     }
 
     /**
-     * 레디스 키 삭제
+     * 연결된 레디스 데이터베이스의 모든 데이터 삭제
      *
      * @param key 레디스 키
      * @return 성공여부

@@ -28,6 +28,9 @@ public class Reward {
     @Column(name = "reward_dtm", nullable = false, updatable = false)
     private LocalDateTime rewardDtm;  // 리워드 시간 (지급 대상 날짜)
 
+    @Column(name = "collect_dtm", nullable = false, updatable = false)
+    private LocalDateTime collectDtm;  // 요청 시점 (집계 기준일)
+
     @Column(name = "created_dmt", nullable = false, updatable = false)
     private LocalDateTime createdDmt;  // 생성 시간 (요청 시점)
 

@@ -14,6 +14,6 @@ public class FixedTimeConfig {
     @Bean
     @Primary
     public Clock fixedClock() {
-        return Clock.fixed(Instant.parse("2025-01-01T11:00:00Z"), ZoneId.of("Asia/Seoul"));
+        return Clock.fixed(Instant.parse("2024-12-12T12:12:12Z"), ZoneId.of("Asia/Seoul"));
     }
 }

@@ -1,6 +1,11 @@
 package com.product.reward.reward.dto;
 
-public enum RewardState {
+import com.product.reward.api.EnumFinder;
+import com.product.reward.api.EnumUtils;
+import lombok.Getter;
+
+@Getter
+public enum RewardState implements EnumFinder {
     CREATED("01", "요청 생성"),
     COMPLETE("02", "처리 완료"),
     FAIL("10", "실패"),
@@ -12,5 +17,9 @@ public enum RewardState {
     RewardState(String code, String desc) {
         this.code = code;
         this.desc = desc;
+    }
+
+    public static RewardState fromCode(String code) {
+        return EnumUtils.fromCode(RewardState.class, code);
     }
 }

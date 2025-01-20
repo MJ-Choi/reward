@@ -38,6 +38,7 @@ CREATE TABLE comics (
 CREATE TABLE stars (
     mid BIGINT NOT NULL,
     cid BIGINT NOT NULL,
+    episod INT,
     created_dtm TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (mid, cid),
     FOREIGN KEY (mid) REFERENCES members(mid),
@@ -49,7 +50,7 @@ CREATE TABLE orders (
     oid BIGINT NOT NULL AUTO_INCREMENT,
     cid BIGINT NOT NULL,
     mid BIGINT NOT NULL,
-    episod INT NOT NULL, -- 0은 작품 자체, 그 이상의 숫자는 회차(1화, 2화, ...)
+    episod INT NOT NULL, -- 회차(1화, 2화, ...)
     created_dmt DATETIME DEFAULT CURRENT_TIMESTAMP,
     update_dtm DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (oid),
@@ -62,6 +63,8 @@ CREATE TABLE reward (
     rid BIGINT NOT NULL AUTO_INCREMENT,
     reward_type VARCHAR(4),
     state VARCHAR(4),
+    reward_dmt DATETIME,
+    collect_dmt DATETIME,
     created_dmt DATETIME,
     update_dtm DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (rid)
@@ -73,6 +76,8 @@ CREATE TABLE reward_history (
     cid BIGINT NOT NULL,
     user_type VARCHAR(2) NOT NULL,
     id BIGINT NOT NULL,
+    rank VARCHAR(6) NOT NULL,
+    point INT NOT NULL,
     created_dmt DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (rid, cid),
     FOREIGN KEY (rid) REFERENCES reward(rid),

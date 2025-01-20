@@ -1,16 +1,14 @@
 package com.product.reward.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "orders")
 public class Order {
@@ -26,7 +24,7 @@ public class Order {
     private Long mid;  // 소비자 ID
 
     @Column(name = "episod", nullable = false)
-    private Integer episod;  // 회차 (0은 작품 자체, 그 이상은 회차)
+    private Integer episod;  // 회차
 
     @Column(name = "created_dmt", nullable = false, updatable = false)
     private LocalDateTime createdDmt;  // 주문 생성 시간

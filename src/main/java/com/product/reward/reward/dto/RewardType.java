@@ -1,10 +1,15 @@
 package com.product.reward.reward.dto;
 
-public enum RewardType {
-    DAILY("01", "일간"),
-    WEEKLY("02", "주간"),
-    MONTHLY("02", "월간"),
-    YEARLY("02", "연간"),
+import com.product.reward.api.EnumFinder;
+import com.product.reward.api.EnumUtils;
+import lombok.Getter;
+
+@Getter
+public enum RewardType implements EnumFinder {
+    DAILY("D", "일간"),
+    WEEKLY("W", "주간"),
+    MONTHLY("M", "월간"),
+    YEARLY("Y", "연간"),
     ;
 
     private String code;
@@ -13,5 +18,8 @@ public enum RewardType {
     RewardType(String code, String desc) {
         this.code = code;
         this.desc = desc;
+    }
+    public static RewardType fromCode(String code) {
+        return EnumUtils.fromCode(RewardType.class, code);
     }
 }

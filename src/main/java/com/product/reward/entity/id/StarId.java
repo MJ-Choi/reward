@@ -13,5 +13,6 @@ public class StarId implements Serializable {
 
     private Long mid;
     private Long cid;
+    private Integer episod;
 
 }

@@ -1,6 +1,11 @@
 package com.product.reward.artist.dto;
 
-public enum ComicState {
+import com.product.reward.api.EnumFinder;
+import com.product.reward.api.EnumUtils;
+import lombok.Getter;
+
+@Getter
+public enum ComicState implements EnumFinder {
     RESERVED("01", "오픈 예약"),
     OPEN("02", "연재중"),
     SLEEP("03", "휴재"),
@@ -14,5 +19,9 @@ public enum ComicState {
     ComicState(String code, String desc) {
         this.code = code;
         this.desc = desc;
+    }
+
+    public static ComicState fromCode(String code) {
+        return EnumUtils.fromCode(ComicState.class, code);
     }
 }
