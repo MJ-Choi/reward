@@ -7,8 +7,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: demo
       MYSQL_DATABASE: company
-      MYSQL_USER: hradmin
-      MYSQL_PASSWORD: hrpass
+      MYSQL_USER: prdadmin
+      MYSQL_PASSWORD: prdpass
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
@@ -20,8 +20,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: demo
       MYSQL_DATABASE: company
-      MYSQL_USER: hradmin
-      MYSQL_PASSWORD: hrpass
+      MYSQL_USER: prdadmin
+      MYSQL_PASSWORD: prdpass
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
